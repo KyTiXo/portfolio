@@ -2,14 +2,13 @@
 import Icon from "./Icon.astro";
 ---
 
-<theme-toggle transition:persist>
+<theme-toggle>
   <button>
     <span class="sr-only">Dark theme</span>
     <span class="icon light"><Icon icon="sun" /></span>
     <span class="icon dark"><Icon icon="moon-stars" /></span>
   </button>
 </theme-toggle>
-
 <style>
   button {
     display: flex;
@@ -98,11 +97,8 @@ import Icon from "./Icon.astro";
         document.documentElement.classList[dark ? "add" : "remove"](
           "theme-dark"
         );
-        console.log(
-          `Setting theme: ${
-            localStorage.getItem("theme") === "dark" ? "light" : "dark"
-          }`
-        );
+
+        document.documentElement.classList[dark ? "add" : "remove"]("dark");
         localStorage.setItem("theme", dark ? "dark" : "light");
         button.setAttribute("aria-pressed", String(dark));
       };
@@ -115,11 +111,7 @@ import Icon from "./Icon.astro";
     }
 
     isDark() {
-      const themeState = localStorage.getItem("theme");
-      return (
-        (themeState && themeState === "dark") ||
-        document.documentElement.classList.contains("theme-dark")
-      );
+      return localStorage.getItem("theme") === "dark";
     }
   }
   customElements.define("theme-toggle", ThemeToggle);

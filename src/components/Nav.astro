@@ -1,7 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import { iconLinks } from "~/content/socials";
+import { iconLinks } from "~/socials";
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
@@ -11,7 +11,7 @@ const textLinks: { label: string; href: string }[] = [
 ];
 ---
 
-<nav transition:animate="slide">
+<nav>
   <div class="menu-header">
     <a href="/" class="site-title">
       <Icon
