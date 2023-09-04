@@ -104,7 +104,7 @@ const textLinks: { label: string; href: string }[] = [
         }
       </div>
 
-      <div class="theme-toggle">
+      <div class="theme-toggle" transition:persist>
         <ThemeToggle />
       </div>
     </div>
@@ -206,7 +206,7 @@ const textLinks: { label: string; href: string }[] = [
   }
 
   .menu-button:hover::before {
-    background: purple;
+    background: var(--accent-dark);
   }
 
   .menu-button:hover {
