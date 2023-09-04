@@ -6,21 +6,34 @@ interface Props {
   align?: "start" | "center";
 }
 
-const { align = "center", tagline, title, name } = Astro.props;
+const {
+  align = "center",
+  tagline,
+  title,
+  name = "Kyle Olmstead",
+} = Astro.props;
 ---
 
 <div class:list={["hero stack gap-4", align]}>
   <div class="stack gap-2">
-    <h1 class="title text-4xl md:text-5xl lg:text-6xl">
-      {title}{` `}
-      <span class="name-gradient">{name}</span>
-    </h1>
+    {
+      Astro.url.pathname === "/" ? (
+        <h1 class="title text-4xl md:text-5xl lg:text-6xl">
+          {title}
+          {` `}
+          <span class="name-gradient">{name}</span>
+        </h1>
+      ) : (
+        <h1 class="title text-4xl md:text-5xl lg:text-6xl">{title}</h1>
+      )
+    }
+
     {tagline && <p class="tagline text-lg md:text-xl lg:text-2xl">{tagline}</p>}
   </div>
   <slot />
 </div>
 
-<style>
+<style lang="postcss">
   .hero {
     text-align: center;
   }

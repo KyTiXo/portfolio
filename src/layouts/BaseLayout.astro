@@ -7,9 +7,6 @@ import MainHead from "../components/MainHead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 
-import { ViewTransitions } from "astro:transitions";
-import "~/styles/app.css";
-
 interface Props {
   title?: string | undefined;
   description?: string | undefined;
@@ -20,13 +17,14 @@ const { title, description } = Astro.props;
 
 <html lang="en" class="scroll-smooth antialiased">
   <head>
-    <ViewTransitions />
     <MainHead title={title} description={description} />
   </head>
   <body>
     <div class="stack backgrounds">
       <Nav />
-      <slot />
+      <div transition:animate="slide">
+        <slot />
+      </div>
       <Footer />
     </div>
 
