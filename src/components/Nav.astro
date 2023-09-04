@@ -1,32 +1,13 @@
 ---
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import type { iconPaths } from "./IconPaths";
+import { iconLinks } from "~/content/socials";
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/work/" },
   { label: "About", href: "/about/" },
-];
-
-/** Icon links to social media */
-const iconLinks: {
-  label: string;
-  href: string;
-  icon: keyof typeof iconPaths;
-}[] = [
-  {
-    label: "Twitter",
-    href: "https://twitter.com/KyleDevLife",
-    icon: "twitter-logo",
-  },
-  { label: "GitHub", href: "https://github.com/KyTiXo", icon: "github-logo" },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/kolmstead/",
-    icon: "linkedin-logo",
-  },
 ];
 ---
 
@@ -221,6 +202,15 @@ const iconLinks: {
     background: var(--gradient-stroke);
     border-radius: 999rem;
     z-index: -1;
+    transition: background 120ms ease-in;
+  }
+
+  .menu-button:hover::before {
+    background: purple;
+  }
+
+  .menu-button:hover {
+    cursor: pointer;
   }
 
   .menu-content {
