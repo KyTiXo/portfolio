@@ -90,12 +90,16 @@ import Icon from "./Icon.astro";
     constructor() {
       super();
 
-      const button = this.querySelector("button")!;
+      const button = this.querySelector("button");
+
+      if (!button) {
+        throw new Error("ThemeToggle: Button element not found");
+      }
 
       /** Set the theme to dark/light mode. */
       const setTheme = (dark: boolean) => {
         document.documentElement.classList[dark ? "add" : "remove"](
-          "theme-dark"
+          "theme-dark",
         );
 
         document.documentElement.classList[dark ? "add" : "remove"]("dark");

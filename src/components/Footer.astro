@@ -1,6 +1,5 @@
 ---
 import { iconLinks } from "~/socials";
-import Icon from "./Icon.astro";
 const currentYear = new Date().getFullYear();
 ---
 
@@ -10,7 +9,7 @@ const currentYear = new Date().getFullYear();
   </div>
   <div class="socials">
     {
-      iconLinks.map(({ href, icon, label }) => (
+      iconLinks.map(({ href, label }) => (
         <a href={href} target="_blank" class="social">
           {label}
         </a>

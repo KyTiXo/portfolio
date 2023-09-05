@@ -23,6 +23,21 @@ const projects = (await getCollection("work"))
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
+
+const heroTags = [
+  {
+    text: "Developer",
+    icon: "code",
+  },
+  {
+    text: "Speaker",
+    icon: "microphone-stage",
+  },
+  {
+    text: "Developer",
+    icon: "pencil-line",
+  },
+];
 ---
 
 <BaseLayout>
@@ -35,13 +50,15 @@ const projects = (await getCollection("work"))
           tagline="I am a Full Stack Developer who is currently based in Tampa, Florida."
           align="start"
         >
-          <div class="roles dark:text-white text-black">
-            <Pill>
-              <Icon icon="code" size="1.33em" />
-               Developer
-            </Pill>
-            <Pill><Icon icon="microphone-stage" size="1.33em" /> Speaker</Pill>
-            <Pill><Icon icon="pencil-line" size="1.33em" /> Writer</Pill>
+          <div class="roles text-black dark:text-white">
+            {
+              heroTags.map(({ text, icon }) => (
+                <Pill class="border-2 border-purple-300 bg-gradient-to-r from-purple-400/20 to-violet-300/20 text-slate-800 backdrop-blur dark:to-violet-600/20 dark:text-purple-100">
+                  <Icon icon={icon} size="1.33em" />
+                  {text}
+                </Pill>
+              ))
+            }
           </div>
         </Hero>
 

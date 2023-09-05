@@ -1,7 +1,8 @@
 ---
+import { iconLinks } from "~/socials";
+
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import { iconLinks } from "~/socials";
 
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
@@ -115,36 +116,90 @@ const textLinks: { label: string; href: string }[] = [
   class MenuButton extends HTMLElement {
     constructor() {
       super();
+      this.initElements();
+    }
 
-      // Inject menu toggle button when JS runs.
-      this.appendChild(this.querySelector("template")!.content.cloneNode(true));
-      const btn = this.querySelector("button")!;
+    initElements(): void {
+      const elTemplate = this.getElementBySelector<HTMLTemplateElement>(
+        "template",
+        "Button template"
+      );
 
-      // Hide menu (shown by default to support no-JS browsers).
-      const menu = document.getElementById("menu-content")!;
+      this.appendTemplateContent(elTemplate!);
+
+      const btn = this.getElementBySelector<HTMLButtonElement>(
+        "button",
+        "Button element"
+      );
+
+      const menu = this.getElementById<HTMLElement>(
+        "menu-content",
+        "Menu element"
+      );
+
+      this.setMenuInitialState(menu!);
+      this.toggleMenuOnClick(btn!, menu!);
+      this.handleMediaQueries(btn!, menu!);
+    }
+
+    getElementBySelector<T extends Element>(
+      selector: string,
+      elementName: string
+    ): T | null {
+      const element = this.querySelector<T>(selector);
+      if (!element) {
+        throw new Error(`MenuButton: ${elementName} not found`);
+      }
+      return element;
+    }
+
+    getElementById<T extends Element>(
+      id: string,
+      elementName: string
+    ): T | null {
+      const element = document.getElementById(id) as T | null;
+      if (!element) {
+        throw new Error(`MenuButton: ${elementName} not found`);
+      }
+      return element;
+    }
+
+    appendTemplateContent(template: HTMLTemplateElement): void {
+      this.appendChild(template.content.cloneNode(true));
+    }
+
+    setMenuInitialState(menu: HTMLElement): void {
       menu.hidden = true;
-      // Add "menu-content" class in JS to avoid covering content in non-JS browsers.
       menu.classList.add("menu-content");
+    }
 
-      /** Set whether the menu is currently expanded or collapsed. */
-      const setExpanded = (expand: boolean) => {
-        btn.setAttribute("aria-expanded", expand ? "true" : "false");
-        menu.hidden = !expand;
-      };
+    toggleMenuOnClick(btn: HTMLButtonElement, menu: HTMLElement): void {
+      btn.addEventListener("click", () =>
+        this.setExpanded(menu.hidden, btn, menu)
+      );
+    }
 
-      // Toggle menu visibility when the menu button is clicked.
-      btn.addEventListener("click", () => setExpanded(menu.hidden));
+    setExpanded(
+      expand: boolean,
+      btn: HTMLButtonElement,
+      menu: HTMLElement
+    ): void {
+      btn.setAttribute("aria-expanded", expand ? "true" : "false");
+      menu.hidden = !expand;
+    }
 
-      // Hide menu button for large screens.
+    handleMediaQueries(btn: HTMLButtonElement, menu: HTMLElement): void {
       const handleViewports = (e: MediaQueryList | MediaQueryListEvent) => {
-        setExpanded(e.matches);
+        this.setExpanded(e.matches, btn, menu);
         btn.hidden = e.matches;
       };
+
       const mediaQueries = window.matchMedia("(min-width: 50em)");
       handleViewports(mediaQueries);
       mediaQueries.addEventListener("change", handleViewports);
     }
   }
+
   customElements.define("menu-button", MenuButton);
 </script>
 
