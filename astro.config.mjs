@@ -13,4 +13,10 @@ export default defineConfig({
   ],
 
   site: "https://olmstead.dev",
+
+  markdown: {
+    shikiConfig: {
+      theme: "dracula",
+    },
+  },
 });

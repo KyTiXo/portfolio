@@ -1,13 +1,18 @@
-<div class="pill"><slot /></div>
+<div
+  class="pill dark:bg-black text-purple-800 dark:text-purple-600 bg-white border-2 border-purple-800"
+>
+  <slot />
+</div>
 
 <style lang="postcss">
   .pill {
     display: flex;
     padding: 0.5rem 1rem;
     gap: 0.5rem;
-    color: var(--accent-text-over);
-    border: 1px solid var(--accent-regular);
-    background-color: var(--accent-regular);
+
+    /* color: var(--accent-text-over); */
+    /* border: 1px solid var(--accent-regular); */
+    /* background-color: var(--accent-regular); */
     border-radius: 999rem;
     line-height: 1.35;
     white-space: nowrap;
