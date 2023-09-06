@@ -21,7 +21,7 @@ const textLinks: { label: string; href: string }[] = [
         size="1.6em"
         gradient
       />
-       Kyle Olmstead
+       Olmstead.dev
     </a>
     <menu-button>
       <template>
@@ -40,7 +40,7 @@ const textLinks: { label: string; href: string }[] = [
             <a
               aria-current={Astro.url.pathname === href}
               class:list={[
-                "link",
+                "link ",
                 {
                   active:
                     Astro.url.pathname === href ||
@@ -78,7 +78,7 @@ const textLinks: { label: string; href: string }[] = [
             <a
               aria-current={Astro.url.pathname === href}
               class:list={[
-                "link",
+                "link leading-normal",
                 {
                   active:
                     Astro.url.pathname === href ||

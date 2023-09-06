@@ -1,20 +1,18 @@
 ---
 import { getCollection } from "astro:content";
 
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
-import BaseLayout from "../layouts/BaseLayout.astro";
-
 // Component Imports
 import CallToAction from "../components/CallToAction.astro";
+import ContactCTA from "../components/ContactCTA.astro";
 import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import Icon from "../components/Icon.astro";
 import Pill from "../components/Pill.astro";
 import PortfolioPreview from "../components/PortfolioPreview.astro";
-
+import ProfilePic from "../components/ProfilePic.astro";
 // Page section components
-import ContactCTA from "../components/ContactCTA.astro";
 import Skills from "../components/Skills.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection("work"))
@@ -62,12 +60,15 @@ const heroTags = [
           </div>
         </Hero>
 
-        <img
+        <!-- <img
           alt="Kyle Olmstead smiling in a button up shirt holding his son"
           width="480"
           height="620"
-          src="/assets/portrait.jpg"
-        />
+          src="/assets/prof-pic.svg"
+        /> -->
+        <div class="hero_img">
+          <ProfilePic />
+        </div>
       </header>
 
       <Skills />
@@ -86,8 +87,8 @@ const heroTags = [
         <div class="gallery">
           <Grid variant="offset">
             {
-              projects.map((project) => (
-                <li>
+              projects.map((project, idx) => (
+                <li class="project-card lg:odd:translate-y-8">
                   <PortfolioPreview project={project} />
                 </li>
               ))
@@ -148,12 +149,10 @@ const heroTags = [
     display: none;
   }
 
-  .hero img {
+  .hero .hero_img {
     aspect-ratio: 5 / 4;
     object-fit: cover;
     object-position: top;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-md);
   }
 
   @media (min-width: 50em) {
@@ -170,7 +169,7 @@ const heroTags = [
       gap: 0.5rem;
     }
 
-    .hero img {
+    .hero .hero_img {
       aspect-ratio: 3 / 4;
       border-radius: 4.5rem;
       object-fit: cover;

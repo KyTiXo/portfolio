@@ -3,10 +3,11 @@
 // https://docs.astro.build/en/core-concepts/layouts/
 
 // Component Imports
+import { ViewTransitions } from "astro:transitions";
+
+import Footer from "../components/Footer.astro";
 import MainHead from "../components/MainHead.astro";
 import Nav from "../components/Nav.astro";
-import Footer from "../components/Footer.astro";
-import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title?: string | undefined;
@@ -19,20 +20,20 @@ const { title, description } = Astro.props;
 <html lang="en" class="scroll-smooth antialiased">
   <head>
     <MainHead title={title} description={description} />
-    <!-- <ViewTransitions /> -->
+    <ViewTransitions />
   </head>
   <body>
     <div class="stack backgrounds">
       <Nav />
-      <slot />
+      <slot transition:animate="slide" />
       <Footer />
     </div>
 
     <script>
       // Add “loaded” class once the document has completely loaded.
       addEventListener("load", () =>
-        document.documentElement.classList.add("loaded"),
-);
+        document.documentElement.classList.add("loaded")
+      );
     </script>
 
     <style>
@@ -58,8 +59,6 @@ const { title, description } = Astro.props;
         --bg-blend-mode: lighten;
       }
 
-      /* These backgrounds are displayed below the fold, so we lazy load them
-			   once the `.loaded` class has been set.  */
       :root.loaded {
         --bg-image-subtle-1: url("/assets/backgrounds/bg-subtle-1-light-800w.jpg");
         --bg-image-subtle-2: url("/assets/backgrounds/bg-subtle-2-light-800w.jpg");

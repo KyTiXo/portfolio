@@ -1,12 +1,20 @@
 ---
 const { class: className } = Astro.props;
+
+function createIdFromString(input: string): string {
+  return input.toLowerCase().replace(/\s+/g, "");
+}
+
+const text = await Astro.slots.render("default");
+const transitionName = `${createIdFromString(text)}-pill`;
 ---
 
 <div
+  transition:name={transitionName}
   class:list={[
     "pill",
     {
-      "dark:bg-black/50 text-purple-800 dark:text-purple-600 bg-white border-2 border-purple-800":
+      "border-2 border-slate-300 bg-slate-100/50 text-slate-500 shadow-sm dark:border-gray-900 dark:bg-gray-950 dark:text-gray-600":
         !className,
     },
     [className, "pill"],

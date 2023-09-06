@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+
 import Pill from "./Pill.astro";
 
 interface Props {
@@ -9,35 +10,40 @@ interface Props {
 const { data, slug } = Astro.props.project;
 ---
 
-<a class="card mx-auto" href={`/work/${slug}`}>
-  <div class="title w-full pb-10">{data.title}</div>
-  <img
-    src={data.img}
-    alt={data.img_alt || ""}
-    transition:name={`feat-${slug}`}
-    transition:animate="fade"
-    class="min-h-max h-full"
-    loading="lazy"
-    decoding="async"
-  />
-
-  <div class="inline-block flex-col z-30 start-0 span fl-2 mt-8">
-    <div class="tags inline-flex items-center gap-2 pb-2">
-      {data.tags.map((t) => <Pill>{t}</Pill>)}
-    </div>
+<a
+  class="card mx-auto min-h-[20rem] shadow-sm hover:shadow-md lg:max-h-[30rem] lg:min-h-[20rem]"
+  href={`/work/${slug}`}
+>
+  <div class="title flex h-12 w-fit items-center">{data.title}</div>
+  <div class="img-wrapper overflow-hidden">
+    <img
+      class="mb-10 h-full w-full object-cover will-change-transform"
+      src={data.img}
+      alt={data.img_alt || ""}
+      transition:name={`feat-${slug}`}
+      transition:animate="fade"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 
-  <p
-    class="description text-slate-900 dark:text-slate-200 px-4 bg-gradient-to-br py-8 from-purple-200/80 dark:from-black to-slate-200 dark:to-slate-900"
+  <div
+    class="bg-gradient-to-br from-white to-slate-50 p-8 text-slate-900 dark:from-gray-950 dark:to-gray-950/50 dark:text-gray-200"
   >
-    {data.description}
-  </p>
+    <p class="description" transition:name={`${slug}-desc`}>
+      {data.description}
+    </p>
+    <div class="span tags-grid start-0 z-30 mt-8 inline-block flex-col">
+      <div class="tags inline-flex items-center gap-2 pb-2">
+        {data.tags.map((t) => <Pill>{t}</Pill>)}
+      </div>
+    </div>
+  </div>
 </a>
 
 <style>
   .card {
     display: grid;
-    grid-template: auto 1fr / auto 1fr;
     height: 100%;
     max-width: min(80vw, 600px);
     width: 100%;
@@ -45,7 +51,6 @@ const { data, slug } = Astro.props.project;
     border: 1px solid var(--gray-800);
     border-radius: 0.75rem;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
     text-decoration: none;
     font-family: var(--font-brand);
     /* font-size: var(--text-lg); */
@@ -53,27 +58,18 @@ const { data, slug } = Astro.props.project;
     transition: box-shadow var(--theme-transition);
   }
 
-  :global(.card .pill) {
-    @apply text-base lg:text-lg py-2 md:py-2;
+  .description {
+    font-size: var(--text-lg);
+    max-width: 54ch;
   }
 
-  .card:hover {
-    box-shadow: var(--shadow-md);
-  }
-
-  .fl-2 {
-    grid-area: 3 / 3 / 3 / 1;
-    z-index: 1;
-    margin: 0.5rem;
-    padding: 0.5rem 1rem;
-    color: var(--gray-200);
-    border-radius: 0.375rem;
-    justify-content: end;
-    align-content: start;
+  .spacer {
+    grid-area: 2 / 1 / 2 / 1;
   }
 
   .title {
-    grid-area: 1 / 2 / 1 / 1;
+    grid-area: 1 / 1 / 1 / 1;
+    /* display: inline-block; */
     z-index: 1;
     margin: 0.5rem;
     padding: 0.5rem 1rem;
@@ -82,16 +78,22 @@ const { data, slug } = Astro.props.project;
     border-radius: 0.375rem;
   }
 
-  img {
-    grid-area: 1 / 1 / 6 /6;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .img-wrapper {
+    grid-area: 1 / 1 / 3 / 1;
   }
+  .img-wrapper img {
+    transition: transform 150ms ease-out;
+  }
+  .card:hover img {
+    transform: scale(1.1);
+  }
+
+  /* a:hover img {
+    transform: translateX(-50%) translateY(-50%) scale(1.2);
+  } */
 
   @media (min-width: 50em) {
     .card {
-      height: 22rem;
       border-radius: 1.5rem;
     }
 
